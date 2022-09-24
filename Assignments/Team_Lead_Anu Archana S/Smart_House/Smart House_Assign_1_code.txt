@@ -1,0 +1,66 @@
+
+int trig=2;
+int echo=3;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(11,OUTPUT); //temp indicator led
+  pinMode(trig,OUTPUT);
+  pinMode(echo,INPUT);//Ultrasonic sensor
+  pinMode(7,INPUT);//Motion detector door bell 
+  pinMode(6,OUTPUT);//Level indicator led
+  pinMode(5,OUTPUT);//Buzzer
+}
+
+void loop()
+{
+  //Temperature
+  double a=analogRead(A1);
+  double v= a/1024;
+  double tvolt= v*5;
+  double o = tvolt-0.5;
+  double t= o*100;
+  Serial.print ("Temperature is :");
+  Serial.println(t);
+   if (t>=30)
+  {
+  digitalWrite(11,HIGH);
+  }
+  else
+  {
+    digitalWrite(11,LOW);
+  }
+ 
+  // Water level using ultrasonic sensor
+  digitalWrite(trig,LOW);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  float dur=pulseIn(echo,HIGH);
+  float level=(dur*0.0343)/2;
+  Serial.print("Level of water : ");
+  Serial.println(level);
+  if (level>=100)
+  {
+    digitalWrite(6,HIGH);
+  }
+  else
+  {
+    digitalWrite(6,LOW);
+  }
+  
+  //Near Door bell switch motion detector
+  
+  int m=digitalRead(7);
+  Serial.print("Motion detected : ");
+  Serial.println(m);
+  if (m==1)
+  {
+    digitalWrite(5,HIGH);
+  }
+  else
+  {
+    digitalWrite(5,LOW);
+  }
+}
