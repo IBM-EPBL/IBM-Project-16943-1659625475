@@ -1,0 +1,16 @@
+import random
+import time
+while True:
+   temp=random.randint(1,100)
+   hum=random.randint(1,100)
+   print("Temperature(in celsius)",temp)
+   print("Humidity (in percentage)",hum)
+   if(temp>=50 or hum<=15):
+     print("Alert:Temperature is too high")
+   elif(temp<30 and hum>40):
+     print("Temperature is cool")
+   else:
+     print("Temperature is normal")
+   time.sleep(10)
+
+
